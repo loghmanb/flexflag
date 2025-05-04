@@ -1,6 +1,14 @@
-# 🌟 Feature Request
+---
+name: "🌟 Feature Request"
+about: Suggest an idea or enhancement for FlexFlag feature flag library
+title: "[Feature] "
+labels: enhancement
+assignees: []
+---
 
-Thanks for taking the time to suggest a new feature for our feature flag library!
+# 🌟 Feature Request
+ 
+Thanks for taking the time to suggest a new feature for FlexFlag feature flag library!
 
 ## Summary
 
