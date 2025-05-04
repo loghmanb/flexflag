@@ -2,13 +2,19 @@
   "name": "flexflag",
   "version": "0.0.0",
   "description": "FlexFlag is a powerful and lightweight feature flag engine",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf dist",
+    "build": "npm run clean && npx tsc -p tsconfig.json",
+    "esbuild": "npm run clean && tsc && esbuild src/index.ts --bundle --format=esm --outfile=dist/index.mjs",
+    "test": "jest",
+    "cov": "jest --coverage",
+    "example": "ts-node example/index.ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/loghmanb/flexflag.git"
+    "url": "git+ssh://git@github.com/loghmanb/flexflag.git"
   },
   "keywords": [
     "Flexible",
@@ -16,13 +22,29 @@
     "Flag",
     "Lightweight"
   ],
-  "author": "Loghman Barari",
+  "author": {
+    "name": "Loghman Barari",
+    "email": "loghmanb@gmail.com",
+    "url": "https://www.linkedin.com/in/loghman-barari-13095724/"
+  },
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/loghmanb/flexflag/issues"
   },
   "homepage": "https://github.com/loghmanb/flexflag#readme",
-  "dependencies": {
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.12",
+    "esbuild": "^0.25.3",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
   }
 }
