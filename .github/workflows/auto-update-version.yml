@@ -1,0 +1,69 @@
+name: Auto Update Version
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  auto-update-version:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+
+      - name: Determine Version Type
+        id: determine_version
+        run: |
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+
+          # Check branch name and determine version type
+          if [[ "$BRANCH_NAME" =~ ^(feat|feature)/ ]]; then
+            echo "version_type=minor" >> $GITHUB_ENV
+            echo "Branch is a feature branch. Incrementing minor version."
+          elif [[ "$BRANCH_NAME" =~ ^(bugfix|bug|hotfix|dependabot)/ ]]; then
+            echo "version_type=patch" >> $GITHUB_ENV
+            echo "Branch is a bugfix branch. Incrementing patch version."
+          elif [[ "$BRANCH_NAME" =~ ^dependabot/ ]]; then
+            echo "version_type=patch" >> $GITHUB_ENV
+            echo "Branch is a dependabot branch. Incrementing patch version."
+          else
+            echo "version_type=minor" >> $GITHUB_ENV
+            echo "Branch name does not match the required patterns."
+            # exit 0
+          fi
+
+      - name: Increment Version
+        id: increment_version
+        run: |
+          if [[ "$version_type" == "minor" ]]; then
+            npm version minor --no-git-tag-version
+          elif [[ "$version_type" == "patch" ]]; then
+            npm version patch --no-git-tag-version
+          fi
+
+          # Get the new version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "::set-output name=new_version::$NEW_VERSION"
+          echo "Updated package version to $NEW_VERSION."
+
+      - name: Update package-lock.json
+        run: |
+          npm install
+          echo "package-lock.json updated successfully."
+
+      - name: Commit and Push Changes
+        if: steps.increment_version.outputs.new_version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "chore: bump version to ${{ steps.increment_version.outputs.new_version }}"
+          git push origin HEAD
