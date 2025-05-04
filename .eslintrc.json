@@ -1,0 +1,33 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "project": "./tsconfig.json" 
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "ignorePatterns": [
+      "node_modules/",
+      "dist/"
+    ],
+    "env": {
+      "node": true,
+      "es2020": true
+    },
+    "rules": {
+      "quotes": ["error", "single"],  // Enforce single quotes for strings
+      "@typescript-eslint/explicit-module-boundary-types": "off",  // Optionally disable the need for explicit return types
+      "indent": ["error", 2, {
+        "SwitchCase": 1, // Indent switch case statements
+        "VariableDeclarator": 1, // Indent variable declarations
+        "outerIIFEBody": 1, // Indent outer function bodies
+        "MemberExpression": 1, // Indent member expressions
+      }],  // Enforce 2 spaces for indentation
+      "@typescript-eslint/indent": ["error", 2]  // Ensure indentation is also enforced for TypeScript files
+    }
+}
+  
