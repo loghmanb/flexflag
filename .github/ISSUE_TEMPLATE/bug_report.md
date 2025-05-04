@@ -1,6 +1,14 @@
+---
+name: Bug report
+about: Create a report to help us improve FlexFlag feature flag library
+title: 'FF-'
+labels: 'bug'
+assignees: ''
+---
+
 # 🐞 Bug Report
 
-Thanks for helping us improve the feature flag library by reporting a bug.
+Thanks for helping us improve FlexFlag feature flag library by reporting a bug.
 
 ## Environment
 
