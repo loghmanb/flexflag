@@ -1,4 +1,4 @@
-import { FlexFlag } from "./flexflag.types"
+import { FlexFlag } from './flexflag.types';
 
 export interface FeatureFlagConfig {
     env: 'development' | 'production'

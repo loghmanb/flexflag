@@ -1,2 +1,2 @@
-export * from './flexflag'
-export * from './config'
+export * from './flexflag';
+export * from './config';
