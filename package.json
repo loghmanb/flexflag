@@ -1,6 +1,6 @@
 {
   "name": "flexflag",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "FlexFlag is a powerful and lightweight feature flag engine",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
